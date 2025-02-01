@@ -13,5 +13,6 @@ data class Expense(
     val id: Long? = null,
     val description: String = "",
     val amount: BigDecimal = BigDecimal.ZERO,
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val label: ExpenseLabel? = null
 )

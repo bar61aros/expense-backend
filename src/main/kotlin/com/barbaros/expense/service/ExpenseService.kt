@@ -11,20 +11,21 @@ class ExpenseService(private val expenseRepository: ExpenseRepository) {
     fun createExpense(expenseDTO: ExpenseDTO): ExpenseDTO {
         val expense = Expense(
             description = expenseDTO.description,
-            amount = expenseDTO.amount
+            amount = expenseDTO.amount,
+            label = expenseDTO.label
         )
         val savedExpense = expenseRepository.save(expense)
-        return ExpenseDTO(savedExpense.id, savedExpense.description, savedExpense.amount)
+        return ExpenseDTO(savedExpense.id, savedExpense.description, savedExpense.amount, savedExpense.label)
     }
 
     fun getAllExpenses(): List<ExpenseDTO> {
         return expenseRepository.findAll().map { expense ->
-            ExpenseDTO(expense.id, expense.description, expense.amount)
+            ExpenseDTO(expense.id, expense.description, expense.amount, expense.label)
         }
     }
 
     fun getExpenseById(id: Long): ExpenseDTO? {
         val expense = expenseRepository.findById(id).orElse(null) ?: return null
-        return ExpenseDTO(expense.id, expense.description, expense.amount)
+        return ExpenseDTO(expense.id, expense.description, expense.amount, expense.label)
     }
 }
