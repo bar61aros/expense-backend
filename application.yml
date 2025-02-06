@@ -12,5 +12,5 @@ spring:
     show-sql: true
 
   jwt:
-    secret: "oU+tr6/4CD6u3xBXVsoD9bwKEcNOiUKx2G1vzKPwKwg="
-    expirationMs: 3600000  # 1 hour
+    secret: ${JWT_SECRET}
+    expirationMs: ${JWT_EXPIRATION_MS}
