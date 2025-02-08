@@ -1,53 +1,56 @@
 plugins {
-	id 'org.jetbrains.kotlin.jvm' version '1.9.25'
-	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
-	id 'org.springframework.boot' version '3.4.2'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'org.springframework.boot' version '3.4.2'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.barbaros'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.security:spring-security-crypto'
-	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
-	implementation 'org.jetbrains.kotlin:kotlin-reflect'
-	implementation 'com.auth0:java-jwt:4.5.0'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
+    // Spring Boot Starters
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-kotlin {
-	compilerOptions {
-		freeCompilerArgs.addAll '-Xjsr305=strict'
-	}
+    // JWT Authentication
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // PostgreSQL Database Driver
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Lombok for Cleaner Code (Optional)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Development Tools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
+}
+
+tasks.named('bootJar') {
+    manifest {
+        attributes 'Main-Class': 'com.barbaros.expense.ExpenseApplication'
+    }
 }

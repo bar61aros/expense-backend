@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   postgres:
     image: postgres:15
@@ -13,12 +15,19 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - backend_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d expenses_db" ]
+      interval: 10s
+      retries: 5
+      timeout: 5s
 
   app:
     build: .
     container_name: expense-backend
+    restart: always
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/expenses_db
       SPRING_DATASOURCE_USERNAME: postgres
