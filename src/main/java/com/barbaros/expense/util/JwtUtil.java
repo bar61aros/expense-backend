@@ -1,4 +1,4 @@
-package com.barbaros.expense.security;
+package com.barbaros.expense.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

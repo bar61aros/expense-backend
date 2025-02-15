@@ -1,7 +1,7 @@
 package com.barbaros.expense.controller;
 
 import com.barbaros.expense.dto.AuthDTO;
-import com.barbaros.expense.service.AuthService;
+import com.barbaros.expense.service.auth.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

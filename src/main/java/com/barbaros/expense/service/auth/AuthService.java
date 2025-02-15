@@ -1,9 +1,9 @@
-package com.barbaros.expense.service;
+package com.barbaros.expense.service.auth;
 
 import com.barbaros.expense.dto.AuthDTO;
 import com.barbaros.expense.model.User;
 import com.barbaros.expense.repository.UserRepository;
-import com.barbaros.expense.security.JwtUtil;
+import com.barbaros.expense.util.JwtUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

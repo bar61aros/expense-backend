@@ -12,17 +12,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "expenses")
 public class Expense {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String description;
-
     private BigDecimal amount;
-
     private LocalDateTime createdAt = LocalDateTime.now();
-
     private ExpenseLabel label;
 
     public Expense() {

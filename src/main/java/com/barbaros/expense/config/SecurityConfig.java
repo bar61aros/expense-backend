@@ -1,6 +1,6 @@
 package com.barbaros.expense.config;
 
-import com.barbaros.expense.security.JwtFilter;
+import com.barbaros.expense.service.auth.JwtFilterService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,10 +13,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    private final JwtFilter jwtFilter;
+    private final JwtFilterService jwtFilterService;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
+    public SecurityConfig(JwtFilterService jwtFilterService) {
+        this.jwtFilterService = jwtFilterService;
     }
 
     @Bean
@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // No sessions, use JWT
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);  // Add JWT Filter
+                .addFilterBefore(jwtFilterService, UsernamePasswordAuthenticationFilter.class);  // Add JWT Filter
 
         return http.build();
     }

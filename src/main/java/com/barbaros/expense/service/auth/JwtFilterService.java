@@ -1,5 +1,6 @@
-package com.barbaros.expense.security;
+package com.barbaros.expense.service.auth;
 
+import com.barbaros.expense.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -19,11 +20,11 @@ import java.io.IOException;
 import java.util.Collections;
 
 @Component
-public class JwtFilter extends OncePerRequestFilter {
+public class JwtFilterService extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    public JwtFilter(JwtUtil jwtUtil) {
+    public JwtFilterService(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
 
