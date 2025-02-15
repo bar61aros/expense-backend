@@ -12,37 +12,32 @@ import java.util.Date;
 public class JwtUtil {
 
     @Value("${jwt.secret}")
-    private String secret;
+    private String secretKey;
 
     @Value("${jwt.expirationMs}")
-    private long expiration;
+    private long expirationMs;
 
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();
+    public String extractUsername(String token) {
+        return getClaims(token).getSubject();
     }
 
-    public boolean validateToken(String token) {
-        return getUsernameFromToken(token) != null && !isTokenExpired(token);
+    public boolean isValidToken(String token) {
+        return getClaims(token).getExpiration().after(new Date());
     }
 
-    private boolean isTokenExpired(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secret)
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.getExpiration().before(new Date());
     }
 }

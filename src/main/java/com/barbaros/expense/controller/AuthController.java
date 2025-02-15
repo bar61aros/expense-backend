@@ -1,7 +1,6 @@
 package com.barbaros.expense.controller;
 
-import com.barbaros.expense.dto.LoginDTO;
-import com.barbaros.expense.dto.RegisterDTO;
+import com.barbaros.expense.dto.AuthDTO;
 import com.barbaros.expense.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +17,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterDTO registerDTO) {
-        return authService.register(registerDTO);
+    public String register(@RequestBody AuthDTO authDTO) {
+        return authService.register(authDTO);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO loginDTO) {
-        return authService.login(loginDTO);
+    public String login(@RequestBody AuthDTO authDTO) {
+        return authService.login(authDTO);
     }
 }

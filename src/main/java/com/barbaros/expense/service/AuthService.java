@@ -1,7 +1,6 @@
 package com.barbaros.expense.service;
 
-import com.barbaros.expense.dto.LoginDTO;
-import com.barbaros.expense.dto.RegisterDTO;
+import com.barbaros.expense.dto.AuthDTO;
 import com.barbaros.expense.model.User;
 import com.barbaros.expense.repository.UserRepository;
 import com.barbaros.expense.security.JwtUtil;
@@ -23,22 +22,21 @@ public class AuthService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public String register(RegisterDTO request) {
+    public String register(AuthDTO request) {
         Optional<User> existingUser = Optional.ofNullable(userRepository.findByUsername(request.getUsername()));
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("Email already in use");
         }
 
-        User user = new User(
-                request.getUsername(),
-                passwordEncoder.encode(request.getPassword())
-        );
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         userRepository.save(user);
         return "User registered successfully!";
     }
 
-    public String login(LoginDTO request) {
+    public String login(AuthDTO request) {
         User user = userRepository.findByUsername(request.getUsername());
 
         if (user == null) {
